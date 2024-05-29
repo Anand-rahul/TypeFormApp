@@ -1,0 +1,35 @@
+{
+  "Survey": [
+    {
+      "id": 1,
+      "Question": "What is your Server Name?",
+      "Type": "string",
+      "required": true,
+      "minChar": 5,
+      "pageNo": 1
+    },
+    {
+      "id": 2,
+      "Question": "What is your Age?",
+      "Type": "number",
+      "required": true,
+      "minVal": 18,
+      "pageNo": 1
+    },
+    {
+      "id": 3,
+      "Question": "How was your experience?",
+      "Type": "string",
+      "required": true,
+      "minChar": 20,
+      "pageNo": 2
+    },
+    {
+      "id": 4,
+      "Question": "Did you like our Product?",
+      "Type": "string",
+      "required": false,
+      "pageNo": 3
+    }
+  ]
+}
