@@ -2,8 +2,9 @@
   "Survey": [
     {
       "id": 1,
-      "Question": "What is your Server Name?",
+      "Question": "What is your Name?",
       "Type": "string",
+      "SubType": "Question",
       "required": true,
       "minChar": 5,
       "pageNo": 1
@@ -12,6 +13,7 @@
       "id": 2,
       "Question": "What is your Age?",
       "Type": "number",
+      "SubType": "Question",
       "required": true,
       "minVal": 18,
       "pageNo": 1
@@ -20,15 +22,18 @@
       "id": 3,
       "Question": "How was your experience?",
       "Type": "string",
+      "SubType": "Question",
       "required": true,
       "minChar": 20,
       "pageNo": 2
     },
     {
       "id": 4,
-      "Question": "Did you like our Product?",
+      "Question": "Rate the product on a scale of 1 to 10",
       "Type": "string",
-      "required": false,
+      "SubType": "MCQ",
+      "Options": "Worst|Worse|Bad|Average|Good|Better|Best",
+      "required": true,
       "pageNo": 3
     }
   ]

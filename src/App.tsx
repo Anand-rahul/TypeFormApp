@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import data from "./assets/data.json";
+import data from "./assets/Data.json";
 
 type FormDataType = {
-  formId: string;
   Survey: Survey[];
 };
 
@@ -17,6 +16,14 @@ type Survey = {
   minChar?: number;
   pageNo: number;
   minVal?: number;
+  SubType?: string;
+  Options?: string;
+};
+
+type FormOutput = {
+  id: number;
+  Question: string;
+  Answer: any;
 };
 
 const fetchJSON = (): FormDataType => {
@@ -30,12 +37,13 @@ const fetchJSON = (): FormDataType => {
     minChar: row.minChar,
     pageNo: row.pageNo,
     minVal: row.minVal,
+    SubType: row.SubType,
+    Options: row.Options,
   }));
 
   //console.log(surveyItems);
 
   const formData: FormDataType = {
-    formId: "asdfdvfd1234564",
     Survey: surveyItems,
   };
 
@@ -107,6 +115,13 @@ const App = () => {
 
   const submitData = (data: any) => {
     console.log("worked:", data);
+
+    const surveyResponse: FormOutput[] = form!.Survey.map((item) => ({
+      id: item.id,
+      Question: item.Question,
+      Answer: data[item.Question],
+    }));
+    console.log(surveyResponse);
   };
   const onError = (errors: any) => {
     console.error("Validation Errors:", errors);
@@ -150,9 +165,7 @@ const App = () => {
           item.pageNo === currentPage && (
             <div key={item.id}>
               <label>{item.Question}:</label>
-              {item.Type === "string" && (
-                <input type="text" {...register(item.Question)} />
-              )}
+
               {item.Type === "number" && (
                 <input
                   type="number"
@@ -161,6 +174,23 @@ const App = () => {
               )}
               {item.Type === "boolean" && (
                 <input type="checkbox" {...register(item.Question)} />
+              )}
+              {item.SubType === "MCQ" && (
+                <>
+                  {item.Options?.split("|").map((c: string, i: number) => (
+                    <label key={c}>
+                      <input
+                        type="radio"
+                        value={c}
+                        {...register(item.Question)}
+                      />
+                      {c}
+                    </label>
+                  ))}
+                </>
+              )}
+              {item.Type === "string" && item?.SubType !== "MCQ" && (
+                <input type="text" {...register(item.Question)} />
               )}
             </div>
           )
